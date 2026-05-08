@@ -18,18 +18,20 @@ echo "Claude Code Projekt-Setup"
 echo "========================="
 echo ""
 echo "Welcher Projekttyp?"
-echo "  (1) Entwicklungsprojekt     — Web-Apps, APIs, Bots, Scripts"
-echo "  (2) Knowledge/Skill-Projekt — Wissensdatenbanken, Claude-Skills"
-echo "  (3) Marketing-Projekt       — Funnels, Ads, Avatare"
-echo "  (4) Server-Administration   — Infrastruktur, Ansible, Docker, IaC"
+echo "  (1) Web-Applikation         — FastAPI, Next.js, APIs mit Health/Auth/DB/Jobs"
+echo "  (2) Entwicklungsprojekt     — Bots, Scripts, Tools, Libraries, CLIs"
+echo "  (3) Knowledge/Skill-Projekt — Wissensdatenbanken, Claude-Skills"
+echo "  (4) Marketing-Projekt       — Funnels, Ads, Avatare"
+echo "  (5) Server-Administration   — Infrastruktur, Ansible, Docker, IaC"
 echo ""
-read -rp "Typ [1-4]: " choice
+read -rp "Typ [1-5]: " choice
 
 case "$choice" in
-  1) TYPE="dev" ;;
-  2) TYPE="knowledge" ;;
-  3) TYPE="marketing" ;;
-  4) TYPE="server-admin" ;;
+  1) TYPE="webapp" ;;
+  2) TYPE="dev" ;;
+  3) TYPE="knowledge" ;;
+  4) TYPE="marketing" ;;
+  5) TYPE="server-admin" ;;
   *)
     echo "Ungültige Auswahl. Abbruch."
     exit 1
