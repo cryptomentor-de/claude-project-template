@@ -5,11 +5,12 @@ set -euo pipefail
 
 RULES_REPO="https://github.com/cryptomentor-de/claude-rules.git"
 SUBMODULE_DIR=".claude-rules"
+RULES_LEGACY_TAG="v0-legacy"
 
 # Bereits eingerichtet?
 if [ -f "CLAUDE.md" ] && [ -d "$SUBMODULE_DIR" ]; then
   echo "Claude-Regeln bereits eingerichtet."
-  echo "Zum Update: git submodule update --remote $SUBMODULE_DIR"
+  echo "Update auf das neue Regelwerk nur über den Rollout (claude-rules: tools/sync-rules.sh), nicht per submodule update --remote."
   exit 0
 fi
 
@@ -52,6 +53,9 @@ fi
 echo "Füge Submodule hinzu ($RULES_REPO) ..."
 git submodule add "$RULES_REPO" "$SUBMODULE_DIR"
 git submodule update --init
+# Altes Layout (ein Paket je Projekttyp) bis zur Umstellung auf den Rollout über
+# sync-rules im Repo claude-rules; main hat das neue Paketlayout.
+git -C "$SUBMODULE_DIR" checkout --quiet "$RULES_LEGACY_TAG"
 
 # Symlink CLAUDE.md → richtige Datei im Submodule
 SOURCE=".claude-rules/$TYPE/CLAUDE.md"
@@ -70,4 +74,4 @@ git commit -m "chore: Claude-Regeln eingebunden ($TYPE)"
 echo ""
 echo "Fertig. Claude Code liest jetzt die $TYPE-Regeln."
 echo ""
-echo "Regeln aktualisieren: git submodule update --remote $SUBMODULE_DIR && git add $SUBMODULE_DIR && git commit -m 'chore: claude-rules aktualisiert'"
+echo "Regeln aktualisieren: Rollout über claude-rules (tools/sync-rules.sh); der Submodule-Pointer steht auf $RULES_LEGACY_TAG."
